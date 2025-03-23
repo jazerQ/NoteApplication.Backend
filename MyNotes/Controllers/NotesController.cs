@@ -1,6 +1,6 @@
 ﻿using Domain.Abstractions;
+using Domain.DTOs.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using MyNotes.Contracts;
 
 namespace MyNotes.Controllers
 {
@@ -14,16 +14,16 @@ namespace MyNotes.Controllers
             _noteService = noteService;
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateNoteRequest request)
+        public async Task<IActionResult> Create([FromBody]CreateNoteRequest request, CancellationToken cancellationToken)
         {
-            await _noteService.CreateNote(request.title, request.description);
+            await _noteService.CreateNote(request.title, request.description, cancellationToken);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(GetNoteRequest request, CancellationToken cancellationToken)
         {
-            var notes = await _noteService.GetNotes();
+            var notes = await _noteService.GetNotes(request.Search, request.SortItem, request.SortOrder, cancellationToken);
             return Ok(notes);
         }
     }

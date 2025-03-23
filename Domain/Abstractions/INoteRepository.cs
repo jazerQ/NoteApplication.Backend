@@ -1,7 +1,10 @@
-﻿using Domain.Models;
+﻿using Domain.DTOs.Contracts;
+using Domain.Models;
+
 namespace Domain.Abstractions;
+
 public interface INoteRepository
 {
-    Task Add(Note note);
-    Task<List<Note>> Get();
+    Task Add(Note note, CancellationToken cancellationToken);
+    Task<GetNotesResponse> Get(string? search, string? sortItem, string? sortOrder, CancellationToken cancellationToken);
 }

@@ -1,6 +1,6 @@
-﻿using DataAccess.Repositories;
-using Domain.Models;
+﻿using Domain.Models;
 using Domain.Abstractions;
+using Domain.DTOs.Contracts;
 
 namespace Application;
 public class NoteService : INoteService
@@ -11,14 +11,14 @@ public class NoteService : INoteService
         _repository = repository;
     }
 
-    public async Task CreateNote(string title, string descriptions)
+    public async Task CreateNote(string title, string descriptions, CancellationToken cancellationToken)
     {
         var note = new Note(title, descriptions);
-        await _repository.Add(note);
+        await _repository.Add(note, cancellationToken);
     }
 
-    public async Task<List<Note>> GetNotes()
+    public async Task<GetNotesResponse> GetNotes(string? search, string? sortItem, string? sortOrder, CancellationToken cancellationToken)
     {
-        return await _repository.Get();
+        return await _repository.Get(search, sortItem, sortOrder, cancellationToken);
     }
 }
