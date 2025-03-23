@@ -21,7 +21,7 @@ namespace MyNotes.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(GetNoteRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Get([FromQuery]GetNoteRequest request, CancellationToken cancellationToken)
         {
             var notes = await _noteService.GetNotes(request.Search, request.SortItem, request.SortOrder, cancellationToken);
             return Ok(notes);

@@ -19,7 +19,7 @@ public class NoteRepository : INoteRepository
     }
     public async Task<GetNotesResponse> Get(string? search, string? sortItem, string? sortOrder, CancellationToken cancellationToken)
     {
-        var notesQuery = _context.Note.Where(n => !string.IsNullOrEmpty(search) &&
+        var notesQuery = _context.Note.Where(n => string.IsNullOrEmpty(search) ||
             n.Title.ToLower().Contains(search.ToLower())
         );
 
