@@ -11,6 +11,10 @@ public class NoteService : INoteService
         _repository = repository;
     }
 
+    public async Task DeleteNote(Guid id, CancellationToken cancellation) 
+    {
+        await _repository.Delete(id, cancellation);
+    }
     public async Task CreateNote(string title, string descriptions, CancellationToken cancellationToken)
     {
         var note = new Note(title, descriptions);

@@ -17,15 +17,15 @@ namespace MyNotes
             });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddControllers();
-            //builder.Services.AddCors(options => 
-            //{
-            //    options.AddDefaultPolicy(policy => 
-            //    {
-            //        policy.WithOrigins("http://localhost:3000");
-            //        policy.AllowAnyHeader();
-            //        policy.AllowAnyMethod();
-            //    });d
-            //});
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000");
+                    policy.AllowAnyHeader();
+                    policy.AllowAnyMethod();
+                });
+            });
             builder.Services.AddSwaggerGen();
             builder.Services.GetAllDependencies();
             var app = builder.Build();

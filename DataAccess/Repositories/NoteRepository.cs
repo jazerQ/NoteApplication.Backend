@@ -12,6 +12,13 @@ public class NoteRepository : INoteRepository
     {
         _context = context;
     }
+
+    public async Task Delete(Guid id, CancellationToken cancellationToken) 
+    {
+        await _context.Note.Where(n => n.Id == id).ExecuteDeleteAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+    
     public async Task Add(Note note, CancellationToken cancellationToken)
     {
         await _context.Note.AddAsync(note, cancellationToken);
@@ -42,14 +49,14 @@ public class NoteRepository : INoteRepository
     {
         switch (sortItem) 
         {
-            case "Title":
+            case "title":
                 //Expression<Func<Note, object>> selectorKey = note => note.Title;
                 return note => note.Title;
 
-            case "Description":
+            case "description":
                 return note => note.Description;
 
-            case "CreatedAt":
+            case "createdAt":
                 return note => note.CreatedAt;
 
             default:

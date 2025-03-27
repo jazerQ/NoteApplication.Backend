@@ -26,5 +26,12 @@ namespace MyNotes.Controllers
             var notes = await _noteService.GetNotes(request.Search, request.SortItem, request.SortOrder, cancellationToken);
             return Ok(notes);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromQuery] Guid Id, CancellationToken cancellationToken) 
+        {
+            await _noteService.DeleteNote(Id, cancellationToken);
+            return NoContent();
+        }
     }
 }
